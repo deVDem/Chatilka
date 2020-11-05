@@ -22,9 +22,10 @@ namespace Server
             socket.Bind(endPoint);
             socket.Listen(1);
             Console.WriteLine("Server started on port 228");
+            socket.BeginAccept(AcceptUser, null);
             while (true)
             {
-                socket.BeginAccept(AcceptUser, null);
+                
             }
         }
 
@@ -34,6 +35,7 @@ namespace Server
             Thread thread = new Thread(HandleUser);
             thread.Start(userSocket);
             Console.WriteLine("Клиент подключился");
+            socket.BeginAccept(AcceptUser, null);
         }
         private static List<Socket> userSockets = new List<Socket>();
 
