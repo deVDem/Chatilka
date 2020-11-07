@@ -39,7 +39,7 @@ namespace Server
             Rooms = new List<Room>();
             Clients = new List<Client>();
             endPoint = new IPEndPoint(IPAddress.Any, port);
-            Id = (ushort)random.Next(ushort.MinValue, ushort.MaxValue);
+            Id = Utils.getUniqueId(Program.Servers);
             Log.Info($"Starting server with id {Id}..");
             this.maxRooms = maxRooms;
             this.maxUsers = maxUsers;
@@ -50,12 +50,13 @@ namespace Server
             socket.BeginAccept(AcceptConnection, null);
         }
 
+
         private void AcceptConnection(IAsyncResult ar)
         {
             Socket connectionSocket = socket.EndAccept(ar);
             string ipAddressClient = IPAddress.Parse(((IPEndPoint)connectionSocket.RemoteEndPoint).Address.ToString()).ToString();
             Log.Info($"Подключение клиента {ipAddressClient} ..");
-            Client client = new Client(connectionSocket);
+            Clients.Add(new Client(connectionSocket, this));
             socket.BeginAccept(AcceptConnection, null);
         }
     }
