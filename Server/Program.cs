@@ -10,19 +10,21 @@ namespace Server
 {
     class Program
     {
-        private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private static IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 228);
+        public static ushort getUniqueId()
+        {
+            // TODO: сделать уникальность
+            Random random = new Random();
+            int id = random.Next();
+            return (ushort)id;
+        }
+
         static void Main(string[] args)
         {
             Console.Title = "Chatilka Server";
-            Console.WriteLine("Starting server..");
-            socket.Bind(endPoint);
-            socket.Listen(1);
-            Console.WriteLine("Server started on port 228");
             socket.BeginAccept(AcceptUser, null);
             while (true)
             {
-                
+                AcceptCommand(Console.ReadLine());
             }
         }
 
@@ -31,7 +33,6 @@ namespace Server
             Socket userSocket = socket.EndAccept(ar);
             Thread thread = new Thread(HandleUser);
             thread.Start(userSocket);
-            Console.WriteLine("Клиент подключился");
             socket.BeginAccept(AcceptUser, null);
         }
         private static List<Socket> userSockets = new List<Socket>();
@@ -67,5 +68,10 @@ namespace Server
             }
         }
         
+
+        static void AcceptCommand(string command)
+        {
+
+        }
     }
 }
