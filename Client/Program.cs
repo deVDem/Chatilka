@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Sockets;
+using System.Net;
 using System.Windows.Forms;
 
 namespace Client
@@ -11,12 +10,15 @@ namespace Client
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
+        /// 
+        private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new ChatForm());
         }
     }
 }
