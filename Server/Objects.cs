@@ -42,6 +42,7 @@ namespace Server
     {
         public ushort Id { get; private set; }
         public string Name { get; set; }
+        public Client Owner;
         public List<Client> Clients = new List<Client>();
         public bool Private { get; set; }
 
@@ -53,9 +54,10 @@ namespace Server
         public int openNClients;
         public int openEClients;
 
-        public Room(Server server)
+        public Room(Server server, Client owner)
         {
             Id = Utils.getUniqueId(server.Rooms);
+            Owner = owner;
             Name = "Room " + Id.ToString();
         }
 
@@ -172,16 +174,56 @@ namespace Server
                         outputWriter.Write(room.Id);
                         outputWriter.Write(room.Name);
                         outputWriter.Write(room.Private);
+                        send();
                         break;
                     }
                 case PacketTypeClient.CreateRoom:
                     {
+                        if (room != null || Nickname.Replace(" ", "").Length == 0)
+                        {
+                            outputWriter.Write((int)PacketTypeServer.Error);
+                            if (room != null) outputWriter.Write(1); // комната уже есть
+                            else if (Nickname.Replace(" ", "").Length == 0) outputWriter.Write(2); // нет никнейма
+                            else outputWriter.Write(0); // неизвестная ошибка
+                        }
+                        else
+                        {
+                            bool Private = inputReader.ReadBoolean();
+                            room = server.createRoom(this);
+                            room.Private = Private;
+                            outputWriter.Write((int)PacketTypeServer.SetMyRoom);
+                            outputWriter.Write(room.Id);
+                            outputWriter.Write(room.Name);
+                            outputWriter.Write(room.Private);
+                            send();
+                        }
+                        send();
+                        break;
+                    }
+                case PacketTypeClient.JoinRoom:
+                    {
+                        if (room != null || Nickname.Replace(" ", "").Length == 0)
+                        {
+                            outputWriter.Write((int)PacketTypeServer.Error);
+                            if (room != null) outputWriter.Write(1); // комната уже есть
+                            else if (Nickname.Replace(" ", "").Length == 0) outputWriter.Write(2); // нет никнейма
+                            else outputWriter.Write(0); // неизвестная ошибка
+                        }
+                        else
+                        {
 
+                        }
                         break;
                     }
                 case PacketTypeClient.SendMessage:
                     {
-
+                        if (room == null)
+                        {
+                            outputWriter.Write((int)PacketTypeServer.Error);
+                            outputWriter.Write(3); // не в комнате
+                            send();
+                            break;
+                        }
                         break;
                     }
             }

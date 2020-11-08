@@ -51,6 +51,13 @@ namespace Server
         }
 
 
+        public Room createRoom(Client owner)
+        {
+            Room room = new Room(this, owner);
+            Rooms.Add(room);
+            return room;
+        }
+
         private void AcceptConnection(IAsyncResult ar)
         {
             Socket connectionSocket = socket.EndAccept(ar);
