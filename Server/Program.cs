@@ -13,15 +13,16 @@ namespace Server
 {
     class Program
     {
+        private static int port = new Random().Next(50000, 65000);
         private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private static IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 228);
+        private static IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, port);
         static void Main(string[] args)
         {
             Console.Title = "Chatilka Server";
             Console.WriteLine("Starting server..");
             socket.Bind(endPoint);
             socket.Listen(1);
-            Console.WriteLine("Server started on port 228");
+            Console.WriteLine($"Server started on port {port}");
             socket.BeginAccept(AcceptUser, null);
             while (true)
             {

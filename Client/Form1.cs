@@ -48,7 +48,7 @@ namespace Client
         {
             if (!socket.Connected)
             {
-                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ipTextBox.Text), 228);
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(ipTextBox.Text), Convert.ToInt32(textBox1.Text));
                 socket.Connect(endPoint);
                 connectButton.Enabled = false;
                 sendButton.Enabled = true;

@@ -36,6 +36,7 @@
             this.msgsTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.nickTextBox = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -53,7 +54,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ipTextBox.Location = new System.Drawing.Point(39, 12);
             this.ipTextBox.Name = "ipTextBox";
-            this.ipTextBox.Size = new System.Drawing.Size(280, 20);
+            this.ipTextBox.Size = new System.Drawing.Size(235, 20);
             this.ipTextBox.TabIndex = 1;
             this.ipTextBox.Text = "127.0.0.1";
             // 
@@ -121,11 +122,19 @@
             this.nickTextBox.Size = new System.Drawing.Size(322, 20);
             this.nickTextBox.TabIndex = 7;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(281, 12);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(38, 20);
+            this.textBox1.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(412, 310);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.nickTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.msgsTextBox);
@@ -152,6 +161,7 @@
         private System.Windows.Forms.TextBox msgsTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox nickTextBox;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
